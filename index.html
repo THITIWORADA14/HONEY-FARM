@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f0df">
+  <title>HONEY FARM | น้ำผึ้งแท้จากธรรมชาติ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" onclick="showView('shop');return false"><span class="brand-mark">🍯</span><span>HONEY FARM<small>PURE HONEY · NATURAL SWEETNESS</small></span></a>
+    <nav><button class="nav-link active" data-view="shop">หน้าร้าน</button><button class="nav-link" data-view="admin">จัดการคำสั่งซื้อ</button></nav>
+    <button class="cart-button" onclick="openCart()">ตะกร้า <b id="cart-count">0</b></button>
+  </header>
+
+  <main id="shop-view">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">FROM NATURE TO YOUR HOME</span>
+        <h1>ความหวานจากธรรมชาติ<br><em>ในทุกหยดของน้ำผึ้ง</em></h1>
+        <p>เติมความสุขให้ทุกวันด้วยน้ำผึ้งหอมหวาน คัดสรรมาเพื่อช่วงเวลาดี ๆ ของคุณ</p>
+        <button class="primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">เลือกช้อปสินค้า <span>→</span></button>
+      </div>
+      <div class="hero-art"><div class="sun"></div><div class="honey-jar"><span>HONEY<br>FARM</span></div><div class="honey-dipper">〰</div><div class="leaf leaf-one">✦</div><div class="leaf leaf-two">✧</div></div>
+      <div class="hero-note">NATURAL<br>GOODNESS</div>
+    </section>
+
+    <section class="benefits">
+      <div><span>🌼</span><b>คัดสรรจากธรรมชาติ</b><small>ใส่ใจในทุกขั้นตอน</small></div>
+      <div><span>🍯</span><b>หอมหวานเป็นเอกลักษณ์</b><small>เลือกได้ 2 สูตร</small></div>
+      <div><span>📦</span><b>แพ็กอย่างใส่ใจ</b><small>เตรียมส่งถึงบ้านคุณ</small></div>
+    </section>
+
+    <section class="products section" id="products">
+      <div class="section-heading"><div><span class="eyebrow">OUR PRODUCTS</span><h2>เลือกความหวานที่ใช่</h2></div><p>HONEY FARM คัดสรรน้ำผึ้ง 2 สูตร<br>ให้คุณเลือกตามสไตล์ที่ชอบ</p></div>
+      <div class="product-grid" id="product-grid"></div>
+    </section>
+
+    <section class="story"><div class="story-icon">🐝</div><div><span class="eyebrow">A LITTLE HONEY, A LOT OF JOY</span><h2>ส่งต่อความหวาน<br>จากเราไปถึงคุณ</h2><p>ขอบคุณที่เลือก HONEY FARM ทุกคำสั่งซื้อเป็นกำลังใจให้ร้านของเรา</p></div></section>
+    <footer>© 2026 HONEY FARM · PURE HONEY, NATURAL SWEETNESS</footer>
+  </main>
+
+  <main id="admin-view" class="hidden">
+    <section class="admin-head"><div><span class="eyebrow">STORE MANAGEMENT</span><h1>จัดการคำสั่งซื้อ</h1><p>ตรวจสอบออเดอร์ เตรียมหยิบสินค้า และแพ็กพัสดุ</p></div><div class="connection" id="connection-state">● โหมดตัวอย่าง</div></section>
+    <section class="stats" id="stats"></section>
+    <section class="admin-panel">
+      <div class="panel-title"><div><span class="eyebrow">ORDER CENTER</span><h2>รายการคำสั่งซื้อ</h2></div><button class="outline" onclick="loadOrders()">↻ รีเฟรช</button></div>
+      <div class="table-wrap"><table><thead><tr><th>เลขที่ออเดอร์</th><th>ลูกค้า</th><th>รายการสินค้า</th><th>ยอดรวม</th><th>สถานะ</th><th>จัดการ</th></tr></thead><tbody id="orders-body"></tbody></table></div>
+      <p class="empty hidden" id="empty-orders">ยังไม่มีคำสั่งซื้อ ทดลองสั่งซื้อจากหน้าร้านเพื่อดูระบบหลังบ้าน</p>
+    </section>
+    <section class="admin-panel">
+      <div class="panel-title"><div><span class="eyebrow">PICK & PACK</span><h2>เตรียมจัดส่งสินค้า</h2></div></div>
+      <div id="fulfillment" class="fulfillment-empty">เลือกคำสั่งซื้อด้านบนเพื่อดูรายการหยิบสินค้าและข้อมูลจัดส่ง</div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop hidden" id="cart-modal" onclick="if(event.target===this)closeCart()">
+    <section class="modal">
+      <button class="close" onclick="closeCart()">×</button><span class="eyebrow">YOUR BASKET</span><h2>ตะกร้าสินค้า</h2>
+      <div id="cart-items"></div>
+      <div class="cart-total"><span>ยอดรวม</span><b id="cart-total">฿0</b></div>
+      <button class="primary full" onclick="showCheckout()">ดำเนินการสั่งซื้อ →</button>
+    </section>
+  </div>
+
+  <div class="modal-backdrop hidden" id="checkout-modal" onclick="if(event.target===this)closeCheckout()">
+    <section class="modal checkout-modal">
+      <button class="close" onclick="closeCheckout()">×</button><span class="eyebrow">CHECKOUT</span><h2>ข้อมูลสำหรับจัดส่ง</h2>
+      <form id="checkout-form">
+        <label>ชื่อผู้รับ<input name="name" required placeholder="ชื่อ-นามสกุล"></label>
+        <label>เบอร์โทรศัพท์<input name="phone" required inputmode="tel" placeholder="08X-XXX-XXXX"></label>
+        <label>ที่อยู่จัดส่ง<textarea name="address" required rows="3" placeholder="บ้านเลขที่ ถนน แขวง/ตำบล เขต/อำเภอ จังหวัด รหัสไปรษณีย์"></textarea></label>
+        <label>หมายเหตุ (ถ้ามี)<input name="note" placeholder="เช่น โทรก่อนส่ง"></label>
+        <div class="cart-total"><span>ยอดชำระ (ตัวอย่าง: เก็บเงินปลายทาง/โอนเงิน)</span><b id="checkout-total">฿0</b></div>
+        <button class="primary full" type="submit">ยืนยันคำสั่งซื้อ</button>
+      </form>
+    </section>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
